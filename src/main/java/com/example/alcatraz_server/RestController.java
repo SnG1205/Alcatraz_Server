@@ -58,13 +58,17 @@ public class RestController {
     }
 
     @PostMapping("/start")
-    public void startGame(@RequestParam(value = "username") String username) throws IOException {
-        if (lobby.getListOfPlayers().size() == lobby.getAmountOfPlayers() && username.equals(lobby.getHostPlayer().getUsername())) {
-            clientCaller.sendPlayersList(lobby.getListOfPlayers());
-            System.out.println("Game has started");
-            lobby = null;
+    public String startGame(@RequestParam(value = "username") String username) throws IOException {
+        if (lobby.getListOfPlayers().size() == lobby.getAmountOfPlayers()) {
+            if (username.equals(lobby.getHostPlayer().getUsername())){
+                clientCaller.sendPlayersList(lobby.getListOfPlayers());
+                System.out.println("Game has started");
+                lobby = null;
+                return "Game has started";
+            }
+            return "You are not an owner of the lobby";
         } else {
-            //Mb change return type of method to return error message
+            return "Lobby is not full yet";
         }
     }
 
