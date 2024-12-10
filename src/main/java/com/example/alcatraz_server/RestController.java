@@ -28,6 +28,7 @@ public class RestController {
                 playersList.add(player);
                 lobby = new Lobby(playersAmount, playersList);
                 lobby.setHostPlayer(player);
+                System.out.println("Lobby created"); //Todo delete
                 return "Lobby was successfully created"; //TODO change return
             }
             else {
@@ -60,6 +61,7 @@ public class RestController {
     public void startGame(@RequestParam(value = "username") String username) throws IOException {
         if (lobby.getListOfPlayers().size() == lobby.getAmountOfPlayers() && username.equals(lobby.getHostPlayer().getUsername())) {
             clientCaller.sendPlayersList(lobby.getListOfPlayers());
+            System.out.println("Game has started");
             lobby = null;
         } else {
             //Mb change return type of method to return error message

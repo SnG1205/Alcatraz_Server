@@ -16,8 +16,8 @@ public class ClientCaller {
 
     public void sendPlayersList(List<Player> players) throws IOException {
         for (Player p: players) {
-            List<Player> otherPlayersList = filterPlayers(players, p.getUsername());
-            sendClients(p, otherPlayersList);
+            //List<Player> otherPlayersList = filterPlayers(players, p.getUsername()); //Todo delete, redundant due to client implementation
+            sendClients(p, players);
             // Send list of other players
         }
     }
