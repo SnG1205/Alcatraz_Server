@@ -28,11 +28,11 @@ public class Lobby {
         this.hostPlayer = hostPlayer;
     }
 
-    public void addPlayer(Player player){
+    public void addPlayer(Player player) {
         listOfPlayers.add(player);
     }
 
-    public void deletePlayer(String username){ //Todo add delete
+    public void deletePlayer(String username) { //Todo add delete
         //listOfPlayers.remove(1);
         listOfPlayers.removeIf(player -> player.getUsername().equals(username));
     }

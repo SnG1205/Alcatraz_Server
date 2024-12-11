@@ -2,7 +2,6 @@ package com.example.alcatraz_server.rest;
 
 import com.example.alcatraz_server.data.Player;
 import com.example.alcatraz_server.utils.JsonConverter;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import okhttp3.*;
 
 import java.io.IOException;
@@ -15,15 +14,9 @@ public class ClientCaller {
     private final JsonConverter jsonConverter = new JsonConverter();
 
     public void sendPlayersList(List<Player> players) throws IOException {
-        for (Player p: players) {
-            //List<Player> otherPlayersList = filterPlayers(players, p.getUsername()); //Todo delete, redundant due to client implementation
+        for (Player p : players) {
             sendClients(p, players);
-            // Send list of other players
         }
-    }
-
-    private List<Player> filterPlayers(List<Player> players, String username){
-        return players.stream().filter(player -> !player.getUsername().equals(username)).toList();
     }
 
     private void sendClients(Player player, List<Player> otherPlayers) throws IOException {
@@ -33,10 +26,9 @@ public class ClientCaller {
                 .url(BASE_URL + player.getPort())
                 .post(requestBody)
                 .build();
-        try{
+        try {
             Response response = client.newCall(request).execute();
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
     }

@@ -18,7 +18,7 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-    private String username = String.valueOf(RandomNum.randInt(100)) ;
+    private String username = String.valueOf(RandomNum.randInt(100));
     private Lobby lobby;
     private ServerListener serverListener = new ServerListener(lobby, username);
     private Server server = new Server(username, serverListener);
@@ -33,7 +33,7 @@ public class RestController {
         if (lobby != null) {
             return "Lobby has already been created";
         } else {
-            if(1 < playersAmount && playersAmount < 5){
+            if (1 < playersAmount && playersAmount < 5) {
                 List<Player> playersList = new ArrayList<>();
                 playersList.add(player);
                 lobby = new Lobby(playersAmount, playersList);
@@ -41,8 +41,7 @@ public class RestController {
                 System.out.println("Lobby created"); //Todo delete
                 server.send("lobby_creation!" + jsonConverter.toJson(lobby));
                 return "Lobby was successfully created";//TODO change return
-            }
-            else {
+            } else {
                 return "Amount of players must be in range from 2 to 4"; //TODO change return
             }
         }
@@ -66,13 +65,13 @@ public class RestController {
     @DeleteMapping("/lobby")
     public String leaveLobby(@RequestParam(value = "username") String username) throws SpreadException { //TODO mb better to make it via port
         lobby.deletePlayer(username);
-        if(username.equals(lobby.getHostPlayer().getUsername())){
-            int random = RandomNum.randInt(lobby.getListOfPlayers().size()) ;
+        if (username.equals(lobby.getHostPlayer().getUsername())) {
+            int random = RandomNum.randInt(lobby.getListOfPlayers().size());
             lobby.setHostPlayer(lobby.getListOfPlayers().get(random));
             System.out.println("Leader left lobby, ownership is granted to " + random);
         }
         server.send("lobby_leave!" + username);
-        if(lobby.getListOfPlayers().isEmpty()){
+        if (lobby.getListOfPlayers().isEmpty()) {
             lobby = null;
         }
         return "Successfully left lobby";
@@ -81,7 +80,7 @@ public class RestController {
     @PostMapping("/start")
     public String startGame(@RequestParam(value = "username") String username) throws IOException, SpreadException {
         if (lobby.getListOfPlayers().size() == lobby.getAmountOfPlayers()) {
-            if (username.equals(lobby.getHostPlayer().getUsername())){
+            if (username.equals(lobby.getHostPlayer().getUsername())) {
                 clientCaller.sendPlayersList(lobby.getListOfPlayers());
                 System.out.println("Game has started");
                 lobby = null;

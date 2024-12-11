@@ -2,7 +2,6 @@ package com.example.alcatraz_server.spread_server;
 
 import spread.*;
 
-import java.io.InterruptedIOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
