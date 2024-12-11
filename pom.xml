@@ -47,6 +47,18 @@
 			<version>4.12.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.spread</groupId>
+			<artifactId>spread</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.spread.api</groupId>
+			<artifactId>spread-api</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>

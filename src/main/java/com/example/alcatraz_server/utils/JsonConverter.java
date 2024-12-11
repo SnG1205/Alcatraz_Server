@@ -9,4 +9,8 @@ public class JsonConverter {
     public String toJson(Object object) throws JsonProcessingException {
         return objectMapper.writeValueAsString(object);
     }
+
+    public <T> T fromJson(String json, Class<T> toClass) throws JsonProcessingException {
+        return objectMapper.readValue(json, toClass);
+    }
 }

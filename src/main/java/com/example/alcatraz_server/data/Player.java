@@ -1,10 +1,16 @@
 package com.example.alcatraz_server.data;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Player {
     private String username;
     private int port;
 
-    public Player(String username, int port) {
+    @JsonCreator
+    public Player(
+            @JsonProperty("username") String username,
+            @JsonProperty("port") int port) {
         this.username = username;
         this.port = port;
     }
