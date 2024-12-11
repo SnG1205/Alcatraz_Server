@@ -18,7 +18,7 @@ import java.util.List;
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
-    private String username = String.valueOf(RandomNum.randInt()) ;
+    private String username = String.valueOf(RandomNum.randInt(100)) ;
     private Lobby lobby;
     private ServerListener serverListener = new ServerListener(lobby, username);
     private Server server = new Server(username, serverListener);
@@ -66,6 +66,11 @@ public class RestController {
     @DeleteMapping("/lobby")
     public String leaveLobby(@RequestParam(value = "username") String username) throws SpreadException { //TODO mb better to make it via port
         lobby.deletePlayer(username);
+        if(username.equals(lobby.getHostPlayer().getUsername())){
+            int random = RandomNum.randInt(lobby.getListOfPlayers().size()) ;
+            lobby.setHostPlayer(lobby.getListOfPlayers().get(random));
+            System.out.println("Leader left lobby, ownership is granted to " + random);
+        }
         server.send("lobby_leave!" + username);
         if(lobby.getListOfPlayers().isEmpty()){
             lobby = null;
